@@ -1,0 +1,12 @@
+variables:
+  project: mediawiki
+    environment prd
+
+
+  coreGlobalkv: vntprodglobalkv
+  ParentDnsZone: mediawiki.com
+  appUiCustomIngressEnabled: false
+  linkDomainUrl: https://mwdiawiki.$(hostedZoneName).$(regionalDnsZone)/
+  ams: ams
+  gloal_location: "uksouth"
+  global_locationWest: "ukwest"

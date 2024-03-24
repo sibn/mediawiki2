@@ -1,0 +1,110 @@
+parameters:
+  -name: environment
+      displayName: which environment  bothers you?
+      type: string
+      default: dev
+      values:
+        - dev
+        - sit
+        - ppd
+        - prd
+  - name: whatToDo
+    displayName: What should I do with it, master?
+    type: string
+    default: PlanForApply
+    values:
+      - PlanForApply
+      - PlanAndApply
+      - PlanForDestroy
+      - PlanAndDestroy
+
+
+trigger: none
+
+name: ${{ parameters.environment }}_${{ parametrs.whatToDO }}
+
+resources: 
+  repositories: 
+    - repository: tools
+      type: git
+      name: mediawiki/devops-pipeline-tools
+      ref: feature/update-terraform
+    - repository: vars 
+      type: git
+      name:mediawiki/devops-env-vars
+      ref: master
+    - repository: apidef
+      type: git
+      name: mediawiki/api-definition
+      ref: develop
+      v
+
+variables:
+  agentpool: Agentpool01
+  environment: {{ parameters.environment }}
+  tfSaContainerNamePrefix: mediawiki-apim-${{parameters.environment}}-new
+  workingDirectory: $(System.DefaultWorkingDirectory)/apim-automation
+  ${{ if contains('dev,sit', parameters.environment) }}:
+     platform: NonProd
+  ${{ if contains('ppd', parameters.environment) }}:
+     platform: PreProd
+  ${{ if contains('prd', parameters.environment) }}:
+     platform: Prod
+
+
+stages:
+  - stage: southdeploy
+    displayName: ${{ variable.platform  }} South
+    variables: 
+      - template: vars/${{ variables.platform }}/foundation.yaml@vars
+      - template: vars/${{ variables.platform }}/coreGlobal.yaml@vars
+      - template: vars/${{ variable.platform }}/env/$${{ parameters.environment }}/ mediwiki/envGlobal.yaml@vars
+    jobs:
+    - deployment: justDoIt0
+      environment: ${{ parameters.environment }}mediawiki
+      workspace:
+        clean: all
+        displayName: South deploy
+        pool:
+        name: $(agentpool)
+        variables:
+            - template: vars/${{ variables.platform }}/coreRegional0.yaml@vars
+
+            - name: tfSaContainerName
+              value: '$(tfSaContainerNamePrefix)-'
+          strategy: 
+             runOnce:
+              deploy:
+                steps:
+                  - checkout: self
+                  - checkout: apidef
+                  - template: templates:/load-kv-secrets.yml@vars
+                    parameters: 
+                    azuresubscription: PM-${{ variable.platform }}
+                  
+                  -task: replacetokens@3
+                  displayName: Apim Policy Variables
+                  inputs:
+                    rootDirectory: '$(workingDirectory)/policies'
+                    targetFiles: '**/*.xml'
+                    encoding: 'auto'
+                    writeBOM: true
+                    escapeType: 'none'
+                    actionOnMissing: 'fail'
+                    keepToken: false
+                    actionOnFiles: 'continue'
+                    enableTransforms: false
+                    tokenPrefix: '#{'
+                    tokenSuffix: '#}'
+                    useLegacyPattern: false
+                    enableTelemetry:  false
+                  - template: templates/terraform-storage.yml@tools
+                    parameters: 
+                      azuresubscription: 'PM-$(platform)'
+                      tfAction: ${{ parameters.whatToDo }}
+                  - template: templates/terraform.yml@tools
+                    parameters:
+                      whatToDo: '${{ parameters.whatToDo }}'
+                      workingDirectory: '$(workingDirectory)'
+                      azureServiceConnection: PM-${{ variables.platform }}
+                      

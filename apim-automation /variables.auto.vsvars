@@ -1,0 +1,12 @@
+platform       = "#{platform}#"
+environment    = "#{environment}#"
+tenentId       = "#{tenentId}#"
+subscriptionId = "#{subscriptionId}#"
+regionalDnsZone = "#{regionalDnsZone}#"
+tfSpnclientObjectId = "#{tfSpnclientObjectId}#"
+envshort = {
+    NonProd = "np"
+    PreProd = "pp"
+    prod    = "pd"
+
+}

@@ -1,0 +1,10 @@
+variables: 
+  project: mediawiki
+  environment prd
+
+
+certManagerIssuer: $(environment)-issuer
+secretSuffix: $(environment)$(project)
+topicPrefix: $(environment)$(project)
+hostedZoneName: $(environment)$(project)
+aksClusterNamespace: $(environment)$(project)
