@@ -56,7 +56,11 @@ Every project is different, so consider which of these sections apply to yours. 
 this is the terrafrom infrastructure provissing to host media wiki on azure public cloud
 
 ## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+there are 2 directory added here
+
+apim-automation which is stored main terraform files 
+devops-env-vars stores all the variables for both environment 
+non prod we have 2 env dev and sit. 
 
 ## Badges
 On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
