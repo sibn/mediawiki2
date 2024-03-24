@@ -10,3 +10,13 @@ variables:
   ams: ams
   gloal_location: "uksouth"
   global_locationWest: "ukwest"
+
+globalProductName: azurermpreprod
+globalResourceGroupName: globalResourcemediPreprodRg
+network_Apim: mediawikipreprodNetwork
+Ip_subnet: 10.0.3.0/16
+dns_servers: 10.0.1.2
+subnet_name_1: 10.0.3.0/24
+subnet_name_2: 10.0.4.0/24
+envName: preprod
+_Ciderblock: 10.20.3.0/24

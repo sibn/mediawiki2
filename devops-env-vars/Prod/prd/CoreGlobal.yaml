@@ -10,3 +10,12 @@ variables:
   ams: ams
   gloal_location: "uksouth"
   global_locationWest: "ukwest"
+globalProductName: azurermprod
+globalResourceGroupName: globalResourcemediaProdRg
+network_Apim: mediawikiprodNetwork
+Ip_subnet: 10.0.0.0/16
+dns_servers: 10.0.1.2
+subnet_name_1: 10.0.5.0/24
+subnet_name_2: 10.0.6.0/24
+envName: prod
+_Ciderblock: 10.20.3.0/24

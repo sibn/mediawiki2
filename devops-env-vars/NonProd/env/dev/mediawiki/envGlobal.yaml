@@ -8,3 +8,13 @@ secretSuffix: $(environment)$(project)
 topicPrefix: $(environment)$(project)
 hostedZoneName: $(environment)$(project)
 aksClusterNamespace: $(environment)$(project)
+asw: uksouth
+globalProductName: azurermnonprod
+globalResourceGroupName: globalResourceGroupNameRg
+network_Apim: mediawikinonprodNetwork
+Ip_subnet: 10.0.0.0/16
+dns_servers: 10.0.1.2
+subnet_name_1: 10.0.1.0/24
+subnet_name_2: 10.0.2.0/24
+envName: nonprod
+_Ciderblock: 10.20.1.0/24

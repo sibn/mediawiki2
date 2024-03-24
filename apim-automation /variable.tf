@@ -10,5 +10,9 @@ variable tfSpnclientObjectId {}
 variable regionalDnsZone {}
 variable envshort {}
 variable mediawiki {}
+variable asw {
+    location = "uksouth"
+    location ="ukwest"
+}
 
    
