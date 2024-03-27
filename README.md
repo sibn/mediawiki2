@@ -25,7 +25,7 @@ Running The Automation
 
 Clone the current repo to your local machine using
 
-git clone https://gitlab.com/authenticator4/medaiwiki.git
+git clone https://github.com/authenticator4/medaiwiki.git
 
 Move into Terraform directory
 cd MediaWiki/Terraform/
